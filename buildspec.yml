@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - echo "Listing source contents:"
+      - ls -R
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+      - IMAGE_URI=$AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/myrepo-container:latest
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -t myrepo-container .
+      - docker tag myrepo-container:latest $IMAGE_URI
+  post_build:
+    commands:
+      - echo Pushing image to ECR...
+      - docker push $IMAGE_URI
+      - echo Updating taskdef.json...
+      - sed -i "s|<IMAGE1_NAME>|$IMAGE_URI|" taskdef.json
+      - echo Build complete.
+
+artifacts:
+  files:
+    - appspec.yml
+    - taskdef.json

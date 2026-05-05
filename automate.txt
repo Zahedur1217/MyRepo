@@ -1,0 +1,18 @@
+### This file was used during the recording of the demonstration.
+### Make sure that the lab activity has started and that the "default" AWS credentials are set before preceding.
+
+#### Step 1: Create the docker repo in ECR...
+aws ecr create-repository  \
+  --repository-name myrepo-container \
+  --region us-east-1
+
+aws ecr get-login-password \
+ --region us-east-1 | docker login \
+ --username AWS \
+ --password-stdin 0123456789012.dkr.ecr.us-east-1.amazonaws.com/myrepo-container
+
+#### Step 2: Build the docker image and push it to ECR
+docker build -t myrepo-container .
+docker tag myrepo-container 0123456789012.dkr.ecr.us-east-1.amazonaws.com/myrepo-container
+docker push 0123456789012.dkr.ecr.us-east-1.amazonaws.com/myrepo-container:latest
+
