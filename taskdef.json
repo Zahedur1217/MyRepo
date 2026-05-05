@@ -1,6 +1,6 @@
 {
     "family": "myrepo-task",
-    "executionRoleArn": "arn:aws:iam::0123456789012:role/service-role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::067856596210:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "containerDefinitions": [
       {
@@ -21,6 +21,6 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "taskRoleArn": "arn:aws:iam::0123456789012:role/service-role/appTaskRole"
+    "taskRoleArn": "arn:aws:iam::067856596210:role/appTaskRole"
   }
   
